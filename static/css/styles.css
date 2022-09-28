@@ -1,0 +1,121 @@
+.category-el {
+    text-decoration: none;
+    color:rgb(98, 98, 98);
+    margin: 0.2rem;
+}
+
+.category-el:hover {
+    background-color: rgb(185, 185, 185);
+    color: rgb(255, 255, 255);
+}
+
+@font-face {
+    font-family: fontAwesome;
+    src: url(webfonts/fa-v4compatibility.woff2);
+}
+
+.photo-page{
+    max-height: 100vh;
+    max-width: 100%;
+    margin: auto;
+}
+
+.comment-section {
+    height: 100vh; 
+    overflow:auto;
+}
+
+.close-button {
+    margin-left: 12px;
+    margin-top: 5px;
+}
+
+.profile-img-card{
+    background-color: rgb(255, 254, 253);
+    border: 1px solid rgb(194, 194, 194);
+    border-radius: 9px;
+
+}
+
+.profile-img{
+    border: 5px solid rgb(224, 237, 255);
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.mini-photo{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+body{
+    background-color: rgb(248,250,253);
+}
+
+.account-desc{
+    text-align: justify;
+}
+
+.account-img-card{
+    -webkit-transition: opacity 0.5s ease-in-out;
+    -moz-transition: opacity 0.5s ease-in-out;
+    -ms-transition: opacity 0.5s ease-in-out;
+    -o-transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.account-card:hover .account-img-card{
+    zoom: 1;
+    filter: alpha(opacity=50);
+    opacity: 0.5;
+}
+.account-img-card-overlay{
+    -webkit-transition: opacity 0.5s ease-in-out;
+    -moz-transition: opacity 0.5s ease-in-out;
+    -ms-transition: opacity 0.5s ease-in-out;
+    -o-transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+.account-card:hover .account-img-card-overlay{
+    zoom: 1;
+    filter: alpha(opacity=50);
+    opacity: 1;
+}
+
+a.edit-page{
+    text-decoration: none;
+}
+
+a.edit-page:hover{
+    color: white;
+}
+
+.fa-icon, .fa-icon:hover{
+    text-decoration: none;
+    color: black;
+}
+
+.read-more{
+    display: inline;
+}
+
+.hidden-desc{
+    display: none;
+}
+
+.read-more.hidden{
+    display: none;
+}
+
+.hidden-desc.shown{
+    display: inline;
+}
+
+a.show-desc-btn:hover, a.hide-desc-btn:hover{
+    cursor: pointer;
+}
