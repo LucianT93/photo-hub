@@ -37,6 +37,7 @@ def photo_posts(request):
             rating = form_rating.save(commit=False)
             rating.photography = photo_obj
             rating.owner = request.user.profile
+            rating.save()
 
     return render(request, 'home/home.html', {
         'all_photos': all_photos,
