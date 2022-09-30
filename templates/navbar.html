@@ -22,16 +22,15 @@
             <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Create post
               </a>
           </li>
-
         </ul>
         <form class="d-flex" role="search">
-          <div class="dropdown">
+          <div class="dropdown"></div>
             <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown"
               aria-expanded="false"><img class="mini-photo border border-2 rounded-circle ms-2"
                 src="{% static 'images/profile/user-default.png' %}" /></a>
             <ul class="dropdown-menu" aria-labelledby="profileDropdown">
               <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><a class="dropdown-item" href="#">Logout</a></li>
+              <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
               <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#login">Login/Register</button></li>
             </ul>
           </div>
@@ -61,7 +60,7 @@
       </div>
     </div>
   </div>
-  <!-- Modal for Login -->
+<!-- Modal for Login -->
   <div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -103,34 +102,35 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form method="post">
+            {% csrf_token %}
           <div class="modal-body">
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">@</span>
-              <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                {{ form_signup.username }}
             </div>
             <div class="row mb-3">
-              <label for="inputEmail1" class="col-sm-2 col-form-label">Email</label>
+              <label class="col-sm-2 col-form-label">Email</label>
               <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail1">
+                  {{ form_signup.email }}
               </div>
             </div>
             <div class="row mb-3">
-              <label for="inputPassword1" class="col-sm-2 col-form-label">Password</label>
+              <label class="col-sm-2 col-form-label">Password</label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword1">
+                  {{ form_signup.password1 }}
               </div>
             </div>
             <div class="row mb-3">
-              <label for="inputPassword2" class="col-sm-2 col-form-label">Confirm Password</label>
+              <label class="col-sm-2 col-form-label">Confirm Password</label>
               <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword2">
+                {{ form_signup.password2 }}
               </div>
             </div>
           </div>
           <div class="modal-footer">
             <a type="button" data-bs-toggle="modal" data-bs-target="#login">Already have an account? Login here</a>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">Register</button>
           </div>
         </form>
       </div>

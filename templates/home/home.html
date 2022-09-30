@@ -38,18 +38,20 @@
                                         <p class="card-text m-auto me-2">Rating: </p>
                                         <p class="card-text">{{ form_rating.value }}</p>
                                     </div>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-outline-primary rounded-pill"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="d-sm-inline-block d-none">Edit post</span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Edit Post</a></li>
-                                            <li>
-                                                <button class="dropdown-item">Delete Post</button>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    {% if request.user.is_authenticated %}
+                                        <div class="dropdown">
+                                            <button type="button" class="btn btn-outline-primary rounded-pill"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span class="d-sm-inline-block d-none">Edit post</span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Edit Post</a></li>
+                                                <li>
+                                                    <button class="dropdown-item">Delete Post</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    {% endif %} 
                                 </div>
                                 <hr>
                                 <div class="d-flex">
