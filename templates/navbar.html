@@ -1,163 +1,173 @@
 {% load static %}
 <!-- Navbar -->
-  <nav class="navbar navbar-expand-xl bg-dark navbar-dark">
+<nav class="navbar navbar-expand-xl bg-dark navbar-dark">
     <div class="container-lg">
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCatgory"
-        aria-controls="offcanvasCatgory">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="{% url 'home' %}">
-        <img src="{% static 'images/camera.jpg' %}" class="mini-photo rounded-circle">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Create post
-              </a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <div class="dropdown"></div>
-            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false"><img class="mini-photo border border-2 rounded-circle ms-2"
-                src="{% static 'images/profile/user-default.png' %}" /></a>
-            <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-              <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-              <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#login">Login/Register</button></li>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCatgory"
+                aria-controls="offcanvasCatgory">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <img src="{% static 'images/camera.jpg' %}" class="mini-photo rounded-circle">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Create
+                        post
+                    </a>
+                </li>
             </ul>
-          </div>
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-light" type="submit">Search</button>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                   data-bs-toggle="dropdown"
+                   aria-expanded="false"><img class="mini-photo border border-2 rounded-circle ms-2"
+                                              src="{% static 'images/profile/user-default.png' %}"/></a>
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                    <li>
+                        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#login">
+                            Login/Register
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-light" type="submit">Search</button>
         </form>
-
-      </div>
     </div>
-  </nav>
-  <!-- Offcanvas -->
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCatgory" aria-labelledby="offcanvasCategoryLabel">
+</nav>
+<!-- Offcanvas -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasCatgory" aria-labelledby="offcanvasCategoryLabel">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasCategoryLabel">Category</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <h5 class="offcanvas-title" id="offcanvasCategoryLabel">Category</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body" style="background-color: rgb(248, 249, 250)">
-      <div class="mt-2" style="background-color: rgb(248, 249, 250)">
-        <div class="d-grid mt-2">
-          <a class="btn btn-light category-el" href="#"><i class="fa fa-caret-square-o-right me-2"
-              aria-hidden="true"></i>Landscape</a>
-          <a class="btn btn-light category-el" href="#"><i class="fa fa-caret-square-o-right me-2"
-              aria-hidden="true"></i>Portrait</a>
-          <a class="btn btn-light category-el" href="#"><i class="fa fa-caret-square-o-right me-2"
-              aria-hidden="true"></i>Macro</a>
+        <div class="mt-2" style="background-color: rgb(248, 249, 250)">
+            <div class="d-grid mt-2">
+                <a class="btn btn-light category-el" href="#"><i class="fa fa-caret-square-o-right me-2"
+                                                                 aria-hidden="true"></i>Landscape</a>
+                <a class="btn btn-light category-el" href="#"><i class="fa fa-caret-square-o-right me-2"
+                                                                 aria-hidden="true"></i>Portrait</a>
+                <a class="btn btn-light category-el" href="#"><i class="fa fa-caret-square-o-right me-2"
+                                                                 aria-hidden="true"></i>Macro</a>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 <!-- Modal for Login -->
-  <div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
+<div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="loginLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="loginLabel">Login</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            {{ form_login.username }}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            {{ form_login.password }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#register">Don't you have an account?
+                        Register here</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
         </div>
-        <form method="post">
-            {% csrf_token %}
-          <div class="modal-body">
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Username</label>
-              <div class="col-sm-10">
-                  {{ form_login.username }}
-              </div>
-            </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Password</label>
-              <div class="col-sm-10">
-                  {{ form_login.password }}
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <a type="button" data-bs-toggle="modal" data-bs-target="#register">Don't you have an account? Register here</a>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Login</button>
-          </div>
-        </form>
-      </div>
     </div>
-  </div>
-  <!-- Modal for Register -->
-  <div class="modal fade" id="register" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="registerLabel" aria-hidden="true">
+</div>
+<!-- Modal for Register -->
+<div class="modal fade" id="register" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="registerLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="registerLabel">Register</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerLabel">Register</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">@</span>
+                        {{ form_signup.username }}
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            {{ form_signup.email }}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            {{ form_signup.password1 }}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Confirm Password</label>
+                        <div class="col-sm-10">
+                            {{ form_signup.password2 }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#login">Already have an account? Login
+                        here</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
         </div>
-        <form method="post">
-            {% csrf_token %}
-          <div class="modal-body">
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1">@</span>
-                {{ form_signup.username }}
-            </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Email</label>
-              <div class="col-sm-10">
-                  {{ form_signup.email }}
-              </div>
-            </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Password</label>
-              <div class="col-sm-10">
-                  {{ form_signup.password1 }}
-              </div>
-            </div>
-            <div class="row mb-3">
-              <label class="col-sm-2 col-form-label">Confirm Password</label>
-              <div class="col-sm-10">
-                {{ form_signup.password2 }}
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <a type="button" data-bs-toggle="modal" data-bs-target="#login">Already have an account? Login here</a>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Register</button>
-          </div>
-        </form>
-      </div>
     </div>
-  </div>
-  <!-- Modal for Create page -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+</div>
+<!-- Modal for Create page -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Create post</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Create post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Please select an image to upload</label>
+                        <input class="form-control" type="file" id="formFile" onchange="loadFile(event)">
+                    </div>
+                    <textarea class="form-control"></textarea>
+                    <img id="output" class="img-fluid mt-2 border rounded-2 shadow"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
         </div>
-        <form method="post">
-          <div class="modal-body">
-              <div class="mb-3">
-                <label for="formFile" class="form-label">Please select an image to upload</label>
-                <input class="form-control" type="file" id="formFile" onchange="loadFile(event)">
-              </div>
-                <textarea class="form-control"></textarea>
-                <img id="output" class="img-fluid mt-2 border rounded-2 shadow" />
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
-      </div>
     </div>
-  </div>
+</div>
