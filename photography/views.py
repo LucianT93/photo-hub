@@ -1,10 +1,11 @@
 import time
 
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, TemplateView
 from django.contrib.auth import login, authenticate, logout
 from photography.forms import RatingForm, LoginForm, SignUpForm
 from photography.models import Photography, Rating

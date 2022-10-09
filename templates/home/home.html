@@ -1,205 +1,144 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    PhotoHub
+  PhotoHub
 {% endblock %}
 {% block content %}
 
-    <!-- Main -->
-    <div class="container-lg mt-2 ms-auto">
-        <div class="row">
-            <div class="col-2 d-none d-xl-block mt-2" style="background-color: rgb(248, 249, 250)">
-                <h4 class="mt-2"><i class="fa fa-caret-down me-2" aria-hidden="true"></i>Category</h4>
-                <div class="d-grid mt-2">
-                    <a class="btn btn-light category-el" href="#">Landscape</a>
-                    <a class="btn btn-light category-el" href="#">Portrait</a>
-                    <a class="btn btn-light category-el" href="#">Macro</a>
-                </div>
-            </div>
-            <div class="col-xl-6">
-                <!-- Post Card -->
-                {% for photo in all_photos %}
-                    <div class="card my-2 shadow justify-content-center">
-                        <a href="http://127.0.0.1:5500/photo_page.html"><img src="{{ photo.image.url }}" alt="photo"
-                                                                             class="card-img-top"></a>
-                        <div class="card-body">
-                            <form method="post">
-                                {% csrf_token %}
-                                <div class="d-flex justify-content-between">
-                                    <div class="d-flex">
-                                        <div class="d-flex border border-2 px-2 rounded-pill me-3">
-                                            <p class="card-text m-auto me-2"><i class="fa fa-thumbs-o-up me-2"
-                                                                                aria-hidden="true"></i>{{ photo.up_votes }}
-                                            </p>
-                                            <p class="card-text m-auto"><i class="fa fa-thumbs-o-down me-2"
-                                                                           aria-hidden="true"></i>{{ photo.down_votes }}
-                                            </p>
-                                        </div>
-                                        <p class="card-text m-auto me-2">Rating: </p>
-                                        <p class="card-text">{{ form_rating.value }}</p>
-                                    </div>
-                                    {% if request.user.is_authenticated %}
-                                        <div class="dropdown">
-                                            <button type="button" class="btn btn-outline-primary rounded-pill"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span class="d-sm-inline-block d-none">Edit post</span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Edit Post</a></li>
-                                                <li>
-                                                    <button class="dropdown-item">Delete Post</button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    {% endif %} 
-                                </div>
-                                <hr>
-                                <div class="d-flex">
-                                    <img class="border border-2 rounded-circle mini-photo"
-                                         src="{% static 'images/portret.jpg' %}"/>
-                                    <h5 class="card-title mt-1 ms-2">@luciant93</h5>
-                                    <p class="mt-2" style="font-size: 0.70rem; color: rgb(112, 112, 112);"><i
-                                            class="fa fa-clock-o fa-1 mx-1" aria-hidden="true"></i>2d</p>
-                                </div>
-
-                                <p class="card-text mt-1">{{ photo.description }}</p>
-                                <div class="row">
-                                    <div class="col-sm-10">
-                                        {{ form_rating.body }}
-                                    </div>
-                                    <input type="hidden" name="photo_id" value={{ photo.id }}>
-                                    <div class="col-sm-2 m-auto ">
-                                        <button type="submit" class="btn btn-primary mt-1">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="d-flex mt-3">
-                                <div><img class="border border-2 rounded-circle mx-2 mini-photo"
-                                          src="{% static 'images/portret.jpg' %}"/>
-                                </div>
-                                <div class="border rounded-5 text p-3 d-sm-block d-none"
-                                     style="text-align: justify; font-size: 80%;">Lorem, ipsum dolor sit amet
-                                    consectetur adipisicing elit.
-                                    Consectetur voluptatibus maiores numquam necessitatibus officia, at cupiditate quas
-                                    nam velit nulla error culpa tempore aliquam quis laboriosam, ab maxime enim.
-                                    Labore recusandae repellendus rem ea quam porro. Iste hic eligendi modi labore
-                                    sapiente, fuga provident id minima.
-                                    <span class="read-more">... <a class="show-desc-btn">Read more</a></span>
-                                    <span class="hidden-desc"> enim exercitationem, ullam doloremque accusantium amet sed iusto, unde tenetur, beatae recusandae repellat quasi nulla at quidem?
-                Asperiores, praesentium exercitationem? Voluptate molestias culpa, omnis atque autem voluptatem et dolor officiis neque asperiores accusamus adipisci!
-                Non voluptatibus cumque ullam reiciendis quasi explicabo laudantium aliquid, fugiat ipsam repellat, qui nemo odit vel dolore. Doloribus voluptate temporibus molestiae,
-                mollitia perferendis dolorem nesciunt architecto aliquid a soluta quia debitis quaerat aliquam vel impedit repellendus labore modi reprehenderit atque sint iure incidunt vero
-                doloremque suscipit? Eum sit aut labore? Sit laborum, ullam doloribus sed iusto unde facilis veritatis autem vitae ratione, ex quia magni illo deleniti nesciunt voluptate.
-              <a class="hide-desc-btn">Read less</a></span>
-                                </div>
-                                <div class="d-sm-none">
-                                    <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseComment" aria-expanded="false"
-                                            aria-controls="collapseComment">
-                                        View comment
-                                    </button>
-                                    <div class="collapse mt-2" id="collapseComment">
-                                        <div class="card card-body"> Lorem, ipsum dolor sit amet consectetur adipisicing
-                                            elit.
-                                            Consectetur voluptatibus maiores numquam necessitatibus officia, at
-                                            cupiditate quas nam velit nulla error culpa tempore aliquam quis laboriosam,
-                                            ab maxime enim.
-                                            Labore recusandae repellendus rem ea quam porro. Iste hic eligendi modi
-                                            labore sapiente, fuga provident id minima.
-                                            <span class="read-more">... <a class="show-desc-btn">Read more</a></span>
-                                            <span class="hidden-desc"> enim exercitationem, ullam doloremque accusantium amet sed iusto, unde tenetur, beatae recusandae repellat quasi nulla at quidem?
-                  Asperiores, praesentium exercitationem? Voluptate molestias culpa, omnis atque autem voluptatem et dolor officiis neque asperiores accusamus adipisci!
-                  Non voluptatibus cumque ullam reiciendis quasi explicabo laudantium aliquid, fugiat ipsam repellat, qui nemo odit vel dolore. Doloribus voluptate temporibus molestiae,
-                  mollitia perferendis dolorem nesciunt architecto aliquid a soluta quia debitis quaerat aliquam vel impedit repellendus labore modi reprehenderit atque sint iure incidunt vero
-                  doloremque suscipit? Eum sit aut labore? Sit laborum, ullam doloribus sed iusto unde facilis veritatis autem vitae ratione, ex quia magni illo deleniti nesciunt voluptate.
-                <a class="hide-desc-btn">Read less</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex mt-3">
-                                <div><img class="border border-2 rounded-circle mx-2 mini-photo"
-                                          src="{% static 'images/portret.jpg' %}"/>
-                                </div>
-                                <div class="border rounded-5 text p-3 d-sm-block d-none"
-                                     style="text-align: justify; font-size: 80%;">Lorem, ipsum dolor sit amet
-                                    consectetur adipisicing elit.
-                                    Consectetur voluptatibus maiores numquam necessitatibus officia, at cupiditate quas
-                                    nam velit nulla error culpa tempore aliquam quis laboriosam, ab maxime enim.
-                                    Labore recusandae repellendus rem ea quam porro. Iste hic eligendi modi labore
-                                    sapiente, fuga provident id minima.
-                                    <span class="read-more">... <a class="show-desc-btn">Read more</a></span>
-                                    <span class="hidden-desc"> enim exercitationem, ullam doloremque accusantium amet sed iusto, unde tenetur, beatae recusandae repellat quasi nulla at quidem?
-                Asperiores, praesentium exercitationem? Voluptate molestias culpa, omnis atque autem voluptatem et dolor officiis neque asperiores accusamus adipisci!
-                Non voluptatibus cumque ullam reiciendis quasi explicabo laudantium aliquid, fugiat ipsam repellat, qui nemo odit vel dolore. Doloribus voluptate temporibus molestiae,
-                mollitia perferendis dolorem nesciunt architecto aliquid a soluta quia debitis quaerat aliquam vel impedit repellendus labore modi reprehenderit atque sint iure incidunt vero
-                doloremque suscipit? Eum sit aut labore? Sit laborum, ullam doloribus sed iusto unde facilis veritatis autem vitae ratione, ex quia magni illo deleniti nesciunt voluptate.
-              <a class="hide-desc-btn">Read less</a></span>
-                                </div>
-                                <div class="d-sm-none">
-                                    <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseComment" aria-expanded="false"
-                                            aria-controls="collapseComment">
-                                        View comment
-                                    </button>
-                                    <div class="collapse mt-2" id="collapseComment">
-                                        <div class="card card-body"> Lorem, ipsum dolor sit amet consectetur adipisicing
-                                            elit.
-                                            Consectetur voluptatibus maiores numquam necessitatibus officia, at
-                                            cupiditate quas nam velit nulla error culpa tempore aliquam quis laboriosam,
-                                            ab maxime enim.
-                                            Labore recusandae repellendus rem ea quam porro. Iste hic eligendi modi
-                                            labore sapiente, fuga provident id minima.
-                                            <span class="read-more">... <a class="show-desc-btn">Read more</a></span>
-                                            <span class="hidden-desc"> enim exercitationem, ullam doloremque accusantium amet sed iusto, unde tenetur, beatae recusandae repellat quasi nulla at quidem?
-                  Asperiores, praesentium exercitationem? Voluptate molestias culpa, omnis atque autem voluptatem et dolor officiis neque asperiores accusamus adipisci!
-                  Non voluptatibus cumque ullam reiciendis quasi explicabo laudantium aliquid, fugiat ipsam repellat, qui nemo odit vel dolore. Doloribus voluptate temporibus molestiae,
-                  mollitia perferendis dolorem nesciunt architecto aliquid a soluta quia debitis quaerat aliquam vel impedit repellendus labore modi reprehenderit atque sint iure incidunt vero
-                  doloremque suscipit? Eum sit aut labore? Sit laborum, ullam doloribus sed iusto unde facilis veritatis autem vitae ratione, ex quia magni illo deleniti nesciunt voluptate.
-                <a class="hide-desc-btn">Read less</a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-            <!-- End Post -->
-            <div class="col-4 d-none d-xl-block">
-                <h4 class="mt-2">Most popular photos</h4>
-                <div class="card shadow mt-2 mx-auto">
-                    <img src="https://picsum.photos/300/200" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="my-1" style="font-size: 0.70rem; color: rgb(112, 112, 112);"><i
-                                    class="fa fa-clock-o fa-1 mx-1" aria-hidden="true"></i>2d</p>
-                        </div>
-                        <p class="card-text" style="font-size: 75%;">This is a wider card with supporting text below as
-                            a natural
-                            lead-in to additional
-                            content. This content is a little bit longer.</p>
-                        <div class="d-flex">
-                            <p class="card-text me-2"><i class="fa fa-thumbs-o-up me-2" aria-hidden="true"></i>345</p>
-                            <p class="card-text"><i class="fa fa-thumbs-o-down me-2" aria-hidden="true"></i>65</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card shadow mt-2 mx-auto">
-                    <img src="{% static 'images/DSC_0799.jpg' %}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Ocolașul Mare - Toaca</h5>
-                        <p class="card-text" style="font-size: 75%;">The entire Ceahlau Plateau, captured from my DJI
-                            mini 2</p>
-                        <div class="d-flex">
-                            <p class="card-text me-2"><i class="fa fa-thumbs-o-up me-2" aria-hidden="true"></i>345</p>
-                            <p class="card-text"><i class="fa fa-thumbs-o-down me-2" aria-hidden="true"></i>65</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <!-- Main -->
+  <div class="container-lg mt-2 ms-auto">
+    <div class="row">
+      <div class="col-2 d-none d-xl-block mt-2" style="background-color: rgb(248, 249, 250)">
+        <h4 class="mt-2"><i class="fa fa-caret-down me-2" aria-hidden="true"></i>Category</h4>
+        <div class="d-grid mt-2">
+          <a class="btn btn-light category-el" href="#">Landscape</a>
+          <a class="btn btn-light category-el" href="#">Portrait</a>
+          <a class="btn btn-light category-el" href="#">Macro</a>
         </div>
+      </div>
+      <div class="col-xl-6">
+        <!-- Post Card -->
+        {% for photo in all_photos %}
+          <div class="card my-2 shadow justify-content-center">
+            <a href="http://127.0.0.1:5500/photo_page.html"><img src="{{ photo.image.url }}" alt="photo"
+                                                                 class="card-img-top"></a>
+            <div class="card-body">
+              <div class="pb-2">
+                <form method="post">
+                  {% csrf_token %}
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                      <div class="d-flex border border-2 px-2 rounded-pill me-3">
+                        <p class="card-text m-auto me-2"><i class="fa fa-thumbs-o-up me-2"
+                                                            aria-hidden="true"></i>{{ photo.up_votes }}
+                        </p>
+                        <p class="card-text m-auto"><i class="fa fa-thumbs-o-down me-2"
+                                                       aria-hidden="true"></i>{{ photo.down_votes }}
+                        </p>
+                      </div>
+                      {% if request.user.is_authenticated and request.user != photo.owner.user %}
+                        <p class="card-text m-auto me-2">Rating: </p>
+                        <p class="card-text">{{ form_rating.value }}</p>
+                      {% endif %}
 
+                    </div>
+                    {% if request.user.is_authenticated and request.user == photo.owner.user %}
+                      <div class="dropdown">
+                        <button type="button" class="btn btn-outline-primary rounded-pill"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span class="d-sm-inline-block">
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                          <span class="d-sm-inline-block d-none">Edit post</span>
+
+
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Edit Post</a></li>
+                          <li>
+                            <button class="dropdown-item">Delete Post</button>
+                          </li>
+                        </ul>
+                      </div>
+                    {% endif %}
+                  </div>
+                  <hr>
+                  <div class="d-flex">
+                    <img class="border border-2 rounded-circle mini-photo"
+                         src="{{ photo.owner.profile_image.url }}"/>
+                    <h5 class="card-title mt-1 ms-2">@{{ photo.owner }}</h5>
+                    <p class="mt-2" style="font-size: 0.70rem; color: rgb(112, 112, 112);"><i
+                        class="fa fa-clock-o fa-1 mx-1" aria-hidden="true"></i>{{ photo.created|timesince }}</p>
+                  </div>
+                  <p class="card-text mt-1">{{ photo.description }}</p>
+                  <div class="row">
+                    <div class="col-sm-10">
+                      {{ form_rating.body }}
+                    </div>
+                    <input type="hidden" name="photo_id" value={{ photo.id }}> {# select the image for which to save the rating  #}
+                    <input type="hidden" name="form_rating" value="f_rating">
+                    <div class="col-sm-2 m-auto ">
+                      <button type="submit" class="btn btn-primary mt-1">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              {% for rating in photo.rating_set.all %}
+                <div class="d-flex mt-2">
+                  <div><img class="border border-2 rounded-circle mx-2 mini-photo"
+                            src="{{ rating.owner.profile_image.url }}"/>
+                  </div>
+                  <div class="border rounded-5 text py-2 px-3"
+                       style="text-align: justify; font-size: 80%;">
+                    {% if rating.body|length > 150 %}
+                      {{ rating.body|slice:":150" }}
+                      <span class="read-more">... <a class="show-desc-btn">Read more</a></span>
+                      <span class="hidden-desc">{{ rating.body|slice:"150:" }} <a
+                          class="hide-desc-btn">Read less</a></span>
+                    {% else %}
+                      {{ rating.body }}
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <!-- End Post -->
+      <div class="col-4 d-none d-xl-block">
+        <h4 class="mt-2">Most popular photos</h4>
+        <div class="card shadow mt-2 mx-auto">
+          <img src="https://picsum.photos/300/200" class="card-img-top" alt="...">
+          <div class="card-body">
+            <div class="d-flex">
+              <h5 class="card-title">Card title</h5>
+              <p class="my-1" style="font-size: 0.70rem; color: rgb(112, 112, 112);"><i
+                  class="fa fa-clock-o fa-1 mx-1" aria-hidden="true"></i>2d</p>
+            </div>
+            <p class="card-text" style="font-size: 75%;">This is a wider card with supporting text below as
+              a natural
+              lead-in to additional
+              content. This content is a little bit longer.</p>
+            <div class="d-flex">
+              <p class="card-text me-2"><i class="fa fa-thumbs-o-up me-2" aria-hidden="true"></i>345</p>
+              <p class="card-text"><i class="fa fa-thumbs-o-down me-2" aria-hidden="true"></i>65</p>
+            </div>
+          </div>
+        </div>
+        <div class="card shadow mt-2 mx-auto">
+          <img src="{% static 'images/DSC_0799.jpg' %}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Ocolașul Mare - Toaca</h5>
+            <p class="card-text" style="font-size: 75%;">The entire Ceahlau Plateau, captured from my DJI
+              mini 2</p>
+            <div class="d-flex">
+              <p class="card-text me-2"><i class="fa fa-thumbs-o-up me-2" aria-hidden="true"></i>345</p>
+              <p class="card-text"><i class="fa fa-thumbs-o-down me-2" aria-hidden="true"></i>65</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+  </div>
 {% endblock %}
