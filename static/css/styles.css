@@ -119,3 +119,7 @@ a.edit-page:hover{
 a.show-desc-btn:hover, a.hide-desc-btn:hover{
     cursor: pointer;
 }
+#liveToast{
+    background-color: white ;
+    opacity: 100%;
+}

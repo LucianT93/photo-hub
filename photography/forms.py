@@ -30,10 +30,12 @@ class LoginForm(forms.ModelForm):
 
         widgets = {
             'username': TextInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'id': 'username_login'
             }),
             'password': PasswordInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'id': 'password_login'
             })
         }
 

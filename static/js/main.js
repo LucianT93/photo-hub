@@ -25,3 +25,25 @@ let loadFile = function(event) {
 	let image = document.querySelector('#output');
 	image.src = URL.createObjectURL(event.target.files[0]);
 };
+
+$(document).on('submit','#form_login', function (e){
+    e.preventDefault();
+
+    $.ajax({
+        type:'POST',
+        url:"login/",
+        data:{
+            username: $('#username_login').val(),
+            password: $('#password_login').val(),
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function (data){
+            if(data['message'] === 'success'){
+                location.reload()
+            }
+            else {
+                $('#liveToast').toast('show')
+            }
+        }
+    })
+})

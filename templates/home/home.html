@@ -14,6 +14,7 @@
           <a class="btn btn-light category-el" href="#">Landscape</a>
           <a class="btn btn-light category-el" href="#">Portrait</a>
           <a class="btn btn-light category-el" href="#">Macro</a>
+          <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>
         </div>
       </div>
       <div class="col-xl-6">
@@ -74,7 +75,8 @@
                     <div class="col-sm-10">
                       {{ form_rating.body }}
                     </div>
-                    <input type="hidden" name="photo_id" value={{ photo.id }}> {# select the image for which to save the rating  #}
+                    <input type="hidden" name="photo_id" value={{ photo.id }}>
+                    {# select the image for which to save the rating  #}
                     <input type="hidden" name="form_rating" value="f_rating">
                     <div class="col-sm-2 m-auto ">
                       <button type="submit" class="btn btn-primary mt-1">Submit</button>

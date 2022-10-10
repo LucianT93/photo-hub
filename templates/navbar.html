@@ -71,13 +71,14 @@
 <!-- Modal for Login -->
 <div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="loginLabel" aria-hidden="true">
+
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="loginLabel">Login</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="post" action="{% url 'login' %}">
+      <form method="post" action="{% url 'login' %}" id="form_login">
         {% csrf_token %}
         <div class="modal-body">
           <div class="row mb-3">
@@ -102,7 +103,19 @@
       </form>
     </div>
   </div>
+  <!-- Toast for Login fail -->
+  <div class="toast-container position-fixed top-0 start-50 translate-middle-x">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-body text-danger text-center">
+        <div class="toast-body d-flex justify-content-between text-danger text-center">
+          <div>Username or password incorrect!</div>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 <!-- Modal for Register -->
 <div class="modal fade" id="register" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="registerLabel" aria-hidden="true">
@@ -176,3 +189,4 @@
     </div>
   </div>
 </div>
+<!-- Toast for login -->

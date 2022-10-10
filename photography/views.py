@@ -1,9 +1,10 @@
+import json
 import time
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, TemplateView
@@ -39,20 +40,12 @@ def user_login(request):
     username = request.POST['username']
     password = request.POST['password']
 
-    try:
-        user = User.objects.get(username=username)
-    except:
-        messages.error(request, 'Username does not exists')
-
     user = authenticate(request, username=username, password=password)
 
     if user:
         login(request, user)
-        messages.success(request, 'Logged it successfully ')
-        return redirect('home')
-    else:
-        messages.error(request, 'Username or password incorrect!')
-        return redirect('home')
+        return HttpResponse(json.dumps({'message': 'success'}), content_type='application/json')
+    return HttpResponse(json.dumps({"message": "denied"}),content_type="application/json")
 
 
 def user_register(request):
