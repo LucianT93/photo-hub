@@ -24,7 +24,7 @@
                                                                  class="card-img-top"></a>
             <div class="card-body">
               <div class="pb-2">
-                <form method="post">
+                <form method="post" action="{% url 'rating_form' %}">
                   {% csrf_token %}
                   <div class="d-flex justify-content-between">
                     <div class="d-flex">
