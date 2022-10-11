@@ -45,7 +45,7 @@ def user_login(request):
     if user:
         login(request, user)
         return HttpResponse(json.dumps({'message': 'success'}), content_type='application/json')
-    return HttpResponse(json.dumps({"message": "denied"}),content_type="application/json")
+    return HttpResponse(json.dumps({"message": "denied"}), content_type="application/json")
 
 
 def user_register(request):
@@ -54,8 +54,10 @@ def user_register(request):
         user = form_signup.save(commit=False)
         user.username = user.username.lower()
         user.save()
-        messages.success(request, 'User account was created! ')
-    return redirect('home')
+        login(request, authenticate(
+            username=form_signup.cleaned_data['username'], password=form_signup.cleaned_data['password1']))
+        return HttpResponse(json.dumps({'message': 'success'}), content_type='application/json')
+    return HttpResponse(json.dumps({"message": "denied"}), content_type="application/json")
 
 
 def rating_form(request):

@@ -7,9 +7,9 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     {% if request.user.is_authenticated %}
-      <a href="{% url 'profile' request.user.profile.id %}">
+      <a href="TODO">
         <img class="mini-photo border border-2 rounded-circle"
-             src="{{ request.user.profile.profile_image.url }}"/></a>
+             src="TODO"/></a>
     {% else %}
       <a class="navbar-" href="{% url 'home' %}">
         <img src="{% static 'images/camera.jpg' %}" class="mini-photo rounded-circle">
@@ -25,7 +25,7 @@
           <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
         </li>
         {% if request.user.is_authenticated %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'profile' request.user.profile.id %}">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="TODO:#">Profile</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
         {% endif %}
       </ul>
@@ -97,7 +97,6 @@
         <div class="modal-footer">
           <a type="button" data-bs-toggle="modal" data-bs-target="#register">Don't you have an account?
             <span class="text-primary">Register here</span></a>
-          <input type="hidden" name="form_login" value="f_login">
           <button type="submit" class="btn btn-primary">Login</button>
         </div>
       </form>
@@ -125,7 +124,7 @@
         <h5 class="modal-title" id="registerLabel">Register</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="post" action="{% url 'register' %}">
+      <form method="post" action="{% url 'register' %}" id="form_register">
         {% csrf_token %}
         <div class="modal-body">
           <div class="input-group mb-3">
@@ -155,10 +154,20 @@
           <a type="button" data-bs-toggle="modal" data-bs-target="#login">
             Already have an account? <span class="text-primary">Login
             here </span></a>
-          <input type="hidden" name="form_signup" value="f_signup">
           <button type="submit" class="btn btn-primary">Register</button>
         </div>
       </form>
+    </div>
+  </div>
+  <!-- Toast for Register fail -->
+  <div class="toast-container position-fixed top-0 start-50 translate-middle-x">
+    <div id="liveToastRegister" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-body text-danger text-center">
+        <div class="toast-body d-flex justify-content-between text-danger text-center">
+          <div>Username already exists or password didn't meet the requirements</div>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -51,24 +51,28 @@ class SignUpForm(UserCreationForm):
         self.fields['username'].widget.attrs.update(
             {
                 'class': 'form-control',
-                'placeholder': 'Please enter your username'
+                'placeholder': 'Please enter your username',
+                'id': 'username_register'
             }
         )
         self.fields['email'].widget.attrs.update(
             {
                 'class': 'form-control',
-                'placeholder': 'Please enter your username'
+                'placeholder': 'Please enter your username',
+                'id': 'email_register'
             }
         )
         self.fields['password1'].widget.attrs.update(
             {
                 'class': 'form-control',
-                'placeholder': 'Please enter your password'
+                'placeholder': 'Please enter your password',
+                'id': 'pass1_register'
             }
         )
         self.fields['password2'].widget.attrs.update(
             {
                 'class': 'form-control',
-                'placeholder': 'Please enter your confirmation password'
+                'placeholder': 'Please enter your confirmation password',
+                'id': 'pass2_register'
             }
         )
