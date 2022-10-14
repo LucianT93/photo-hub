@@ -12,6 +12,7 @@ class Profile(models.Model):
     social_youtube = models.CharField(max_length=200, blank=True, null=True)
     social_facebook = models.CharField(max_length=200, blank=True, null=True)
     social_forum = models.CharField(max_length=200, blank=True, null=True)
+    location = models.CharField(max_length=200, blank=True, null=True)
 
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)

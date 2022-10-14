@@ -1,7 +1,3 @@
-function disableBtn(upBtn, upCount) {
-    upBtn.classList.add('disabled')
-    upCount.innerText = parseInt(upCount.innerText) + 1
-}
 
 const shownBtn = document.querySelectorAll('.read-more')
 const hideBtn = document.querySelectorAll('.hide-desc-btn')
@@ -19,10 +15,34 @@ for (let i = 0; i < shownBtn.length; i++) {
     })
 }
 
-let loadFile = function (event) {
-    let image = document.querySelector('#output');
-    image.src = URL.createObjectURL(event.target.files[0]);
-};
+// let loadFile = function (event) {
+//     let image = document.querySelector('#output');
+//     image.src = URL.createObjectURL(event.target.files[0]);
+// };
+
+
+$(document).ready(()=>{
+      $('#formFile').change(function(){
+        const file = this.files[0];
+        if (file){
+          let reader = new FileReader();
+          reader.onload = function(event){
+            $('#output').attr('src', event.target.result);
+          }
+          reader.readAsDataURL(file);
+        }
+      });
+      $('#profile_image').change(function(){
+        const file = this.files[0];
+        if (file){
+          let reader = new FileReader();
+          reader.onload = function(event){
+            $('#profile-img').attr('src', event.target.result);
+          }
+          reader.readAsDataURL(file);
+        }
+      });
+    });
 
 $(document).on('submit', '#form_login', function (e) {
     e.preventDefault();
@@ -66,4 +86,3 @@ $(document).on('submit', '#form_register', function (e) {
         }
     })
 })
-

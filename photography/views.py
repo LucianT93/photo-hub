@@ -9,8 +9,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, TemplateView
 from django.contrib.auth import login, authenticate, logout
-from photography.forms import RatingForm, LoginForm, SignUpForm
+from photography.forms import RatingForm, CreateProfileOnRegister
 from photography.models import Photography, Rating
+from users.forms import LoginForm, SignUpForm
 
 
 class PhotoPostHome(TemplateView):
@@ -50,10 +51,14 @@ def user_login(request):
 
 def user_register(request):
     form_signup = SignUpForm(request.POST)
+    auto_profile_form = CreateProfileOnRegister()
     if form_signup.is_valid() and not form_signup.errors:
-        user = form_signup.save(commit=False)
-        user.username = user.username.lower()
-        user.save()
+        new_user = form_signup.save(commit=False)
+        new_profile = auto_profile_form.save(commit=False)
+        new_user.username = new_user.username.lower()
+        new_profile.user = new_user
+        new_user.save()
+        new_profile.save()
         login(request, authenticate(
             username=form_signup.cleaned_data['username'], password=form_signup.cleaned_data['password1']))
         return HttpResponse(json.dumps({'message': 'success'}), content_type='application/json')

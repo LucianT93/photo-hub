@@ -7,9 +7,9 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     {% if request.user.is_authenticated %}
-      <a href="TODO">
+      <a href="{% url 'profile' request.user.profile.id %}">
         <img class="mini-photo border border-2 rounded-circle"
-             src="TODO"/></a>
+             src="{{ request.user.profile.profile_image.url }}"/></a>
     {% else %}
       <a class="navbar-" href="{% url 'home' %}">
         <img src="{% static 'images/camera.jpg' %}" class="mini-photo rounded-circle">
@@ -25,7 +25,7 @@
           <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
         </li>
         {% if request.user.is_authenticated %}
-          <li class="nav-item"><a class="nav-link" href="TODO:#">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'profile' request.user.profile.id %}">Profile</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
         {% endif %}
       </ul>
@@ -184,7 +184,7 @@
         <div class="modal-body">
           <div class="mb-3">
             <label for="formFile" class="form-label">Please select an image to upload</label>
-            <input class="form-control" type="file" id="formFile" onchange="loadFile(event)">
+            <input class="form-control" type="file" id="formFile">
           </div>
           <textarea class="form-control"></textarea>
           <img id="output" class="img-fluid mt-2 border rounded-2 shadow"/>
