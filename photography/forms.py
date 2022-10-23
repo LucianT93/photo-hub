@@ -3,19 +3,16 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import Select, Textarea, TextInput, PasswordInput, EmailInput
 
-from photography.models import Rating
+from photography.models import Photography, Comment
 from users.models import Profile
 
 
-class RatingForm(forms.ModelForm):
+class CommentForm(forms.ModelForm):
     class Meta:
-        model = Rating
-        fields = ['value', 'body']
+        model = Comment
+        fields = ['body']
 
         widgets = {
-            'value': Select(attrs={
-                'class': 'form-select'
-            }),
             'body': Textarea(attrs={
                 'placeholder': 'Please enter your comment',
                 'class': 'form-control',

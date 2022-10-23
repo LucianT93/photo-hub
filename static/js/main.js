@@ -1,4 +1,3 @@
-
 const shownBtn = document.querySelectorAll('.read-more')
 const hideBtn = document.querySelectorAll('.hide-desc-btn')
 const readMore = document.querySelectorAll('.read-more')
@@ -21,28 +20,66 @@ for (let i = 0; i < shownBtn.length; i++) {
 // };
 
 
-$(document).ready(()=>{
-      $('#formFile').change(function(){
+$(document).ready(() => {
+    $('#formFile').change(function () {
         const file = this.files[0];
-        if (file){
-          let reader = new FileReader();
-          reader.onload = function(event){
-            $('#output').attr('src', event.target.result);
-          }
-          reader.readAsDataURL(file);
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                $('#output').attr('src', event.target.result);
+            }
+            reader.readAsDataURL(file);
         }
-      });
-      $('#profile_image').change(function(){
-        const file = this.files[0];
-        if (file){
-          let reader = new FileReader();
-          reader.onload = function(event){
-            $('#profile-img').attr('src', event.target.result);
-          }
-          reader.readAsDataURL(file);
-        }
-      });
     });
+    $('#profile_image').change(function () {
+        const file = this.files[0];
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                $('#profile-img').attr('src', event.target.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+});
+// TODO: make a function that calls the forms to eliminate redundancy
+$(document).on('submit', '#form_like', function (e) {
+    e.preventDefault()
+
+    $.ajax({
+        type: 'POST',
+        url: "like_dislike/",
+        data: {
+            like: $('#like').val(),
+            photo_id: $('#photo_id').val(),
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function () {
+            let like = $('#no_likes')
+            like.text(parseInt(like.text()) + 1)
+            $("#likeBtn").prop("disabled", true)
+        }
+    })
+})
+
+$(document).on('submit', '#form_dislike', function (e) {
+    e.preventDefault()
+
+    $.ajax({
+        type: 'POST',
+        url: "like_dislike/",
+        data: {
+            dislike: $('#dislike').val(),
+            photo_id: $('#photo_id').val(),
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function () {
+            let dislike = $('#no_dislikes')
+            dislike.text(parseInt(dislike.text()) + 1)
+            $("#dislikeBtn").prop("disabled", true)
+        }
+    })
+})
 
 $(document).on('submit', '#form_login', function (e) {
     e.preventDefault();

@@ -7,7 +7,7 @@ from users.models import Profile
 
 
 class Photography(models.Model):
-    owner = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=50)
     description = models.TextField(max_length=400)
     image = models.ImageField()
@@ -23,20 +23,28 @@ class Photography(models.Model):
         return self.title
 
 
-class Rating(models.Model):
+class Comment(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     photography = models.ForeignKey(Photography, on_delete=models.CASCADE)
     body = models.TextField(max_length=400, null=True, blank=True)
-    value = models.CharField(max_length=100, choices=(
-        ('like', 'Like'),
-        ('dislike', 'Dislike')
-    ))
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 
     def __str__(self):
-        return self.value or self.body
+        return self.body
+
+
+class RatingLikeDislike(models.Model):
+    name = models.CharField(max_length=50)
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    photography = models.ForeignKey(Photography, on_delete=models.CASCADE)
+
+    created = models.DateTimeField(auto_now_add=True)
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+
+    def __str__(self):
+        return self.name
 
 
 class Category(models.Model):

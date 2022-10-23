@@ -24,56 +24,76 @@
                                                                  class="card-img-top"></a>
             <div class="card-body">
               <div class="pb-2">
-                <form method="post" action="{% url 'rating_form' %}">
-                  {% csrf_token %}
-                  <div class="d-flex justify-content-between">
-                    <div class="d-flex">
-                      <div class="d-flex border border-2 px-2 rounded-pill me-3">
-                        <p class="card-text m-auto me-2"><i class="fa fa-thumbs-o-up me-2"
-                                                            aria-hidden="true"></i>{{ photo.up_votes }}
-                        </p>
-                        <p class="card-text m-auto"><i class="fa fa-thumbs-o-down me-2"
-                                                       aria-hidden="true"></i>{{ photo.down_votes }}
-                        </p>
-                      </div>
-                      {% if request.user.is_authenticated and request.user != photo.owner.user %}
-                        <p class="card-text m-auto me-2">Rating: </p>
-                        <p class="card-text">{{ form_rating.value }}</p>
-                      {% endif %}
-
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex">
+                    <div class="d-flex border border-2 px-2 rounded-pill me-3">
+                      <p class="card-text m-auto me-2"><i class="fa fa-thumbs-o-up me-2"
+                                                          aria-hidden="true"></i>
+                        <span id="no_likes">{{ photo.up_votes }}</span>
+                      </p>
+                      <p class="card-text m-auto"><i class="fa fa-thumbs-o-down me-2"
+                                                     aria-hidden="true"></i>
+                        <span id="no_dislikes">{{ photo.down_votes }}</span>
+                      </p>
                     </div>
-                    {% if request.user.is_authenticated and request.user == photo.owner.user %}
-                      <div class="dropdown">
-                        <button type="button" class="btn btn-outline-primary rounded-pill"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if request.user.is_authenticated and request.user != photo.owner.user %}
+{#                      {% if request.user.profile in photo.ratinglikedislike_set.owner %}#}
+                        <form method="POST" id="form_like" action="{% url 'like_dislike' %}">
+                        {% csrf_token %}
+                          <input type="hidden" name="like" id="like" value="Like">
+                          <input type="hidden" name="photo_id" id="photo_id" value={{ photo.id }}>
+                          <button type="submit" value="like" id="likeBtn" class="btn btn-outline-primary me-2">
+                            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like
+                          </button>
+                        </form>
+                        <form method="POST" id="form_dislike" action="{% url 'like_dislike' %}">
+                        {% csrf_token %}
+                          <input type="hidden" name="dislike" id="dislike" value="Dislike">
+                          <input type="hidden" name="photo_id" id="photo_id" value={{ photo.id }}>
+                          <button type="submit" value="dislike" id="dislikeBtn" class="btn btn-outline-primary">
+                            <i class="fa fa-thumbs-o-down" aria-hidden="true"></i> Dislike
+                          </button>
+                        </form>
+{#                      {% endif %}#}
+                    {% endif %}
+
+                  </div>
+                  {% if request.user.is_authenticated and request.user == photo.owner.user %}
+                    <div class="dropdown">
+                      <button type="button" class="btn btn-outline-primary rounded-pill"
+                              data-bs-toggle="dropdown" aria-expanded="false">
                                                 <span class="d-sm-inline-block">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                          <span class="d-sm-inline-block d-none">Edit post</span>
+                        <span class="d-sm-inline-block d-none">Edit post</span>
 
 
-                        </button>
-                        <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="#">Edit Post</a></li>
-                          <li>
-                            <button class="dropdown-item">Delete Post</button>
-                          </li>
-                        </ul>
-                      </div>
-                    {% endif %}
-                  </div>
-                  <hr>
-                  <div class="d-flex">
-                    <img class="border border-2 rounded-circle mini-photo"
-                         src="{{ photo.owner.profile_image.url }}"/>
-                    <h5 class="card-title mt-1 ms-2">@{{ photo.owner }}</h5>
-                    <p class="mt-2" style="font-size: 0.70rem; color: rgb(112, 112, 112);"><i
-                        class="fa fa-clock-o fa-1 mx-1" aria-hidden="true"></i>{{ photo.created|timesince }}</p>
-                  </div>
-                  <p class="card-text mt-1">{{ photo.description }}</p>
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Edit Post</a></li>
+                        <li>
+                          <button class="dropdown-item">Delete Post</button>
+                        </li>
+                      </ul>
+                    </div>
+                  {% endif %}
+                </div>
+                <hr>
+                <div class="d-flex">
+                  <img class="border border-2 rounded-circle mini-photo"
+                       src="{{ photo.owner.profile_image.url }}"/>
+                  <h5 class="card-title mt-1 ms-2">@{{ photo.owner }}</h5>
+                  <p class="mt-2" style="font-size: 0.70rem; color: rgb(112, 112, 112);"><i
+                      class="fa fa-clock-o fa-1 mx-1" aria-hidden="true"></i>{{ photo.created|timesince }}</p>
+                </div>
+                <p class="card-text mt-1">{{ photo.description }}</p>
+                <!-- Comment form -->
+                <form method="post" action="{% url 'rating_form' %}">
+                  {% csrf_token %}
                   <div class="row">
                     <div class="col-sm-10">
-                      {{ form_rating.body }}
+                      {{ form_comment.body }}
                     </div>
+
                     <input type="hidden" name="photo_id" value={{ photo.id }}>
                     {# select the image for which to save the rating  #}
                     <input type="hidden" name="form_rating" value="f_rating">
@@ -83,7 +103,7 @@
                   </div>
                 </form>
               </div>
-              {% for rating in photo.rating_set.all %}
+              {% for rating in photo.comment_set.all %}
                 <div class="d-flex mt-2">
                   <div><img class="border border-2 rounded-circle mx-2 mini-photo"
                             src="{{ rating.owner.profile_image.url }}"/>
