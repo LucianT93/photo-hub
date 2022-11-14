@@ -35,7 +35,7 @@ class Camera(models.Model):
 
 
 class Lens(models.Model):
-    camera = models.ForeignKey(Camera, on_delete=models.SET_NULL, null=True)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
 
     updated = models.DateTimeField(auto_now=True)

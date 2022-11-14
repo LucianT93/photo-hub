@@ -7,7 +7,7 @@
   <div class="container-lg mt-4 ms-auto">
     <div class="row">
       <div class="col-lg-4 position-relative">
-        <a href="{% url 'update-profile' profile.id %}"
+        <a href="{% url 'update-profile' %}"
            class="position-absolute top-0 end-0 badge rounded-pill bg-secondary edit-page">
           <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
         </a>
@@ -29,7 +29,7 @@
       </div>
       <div class="col-lg-8 position-relative">
         <h2 class="text-center"><b>ABOUT ME</b></h2>
-        <a href="{% url 'update-profile' profile.id %}"
+        <a href="{% url 'update-profile' %}"
            class="position-absolute top-0 end-0 badge rounded-pill bg-secondary edit-page">
           <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
         </a>
@@ -49,16 +49,16 @@
             </tr>
             </thead>
             <tbody>
-            {% for camera in profile.camera_set.all %}
-              <tr>
+
+            <tr>
+              {% for camera in profile.camera_set.all %}
                 <td>{{ camera }}</td>
-                <td>
-                  {% for lens in camera.lens_set.all %}
-                    <p>{{ lens }}</p>
-                  {% endfor %}
-                </td>
-              </tr>
-            {% endfor %}
+              {% endfor %}
+              {% for lens in profile.lens_set.all %}
+                <td>{{ lens }}</td>
+              {% endfor %}
+            </tr>
+
             </tbody>
           </table>
         </div>
@@ -81,4 +81,5 @@
       {% endfor %}
     </div>
   </div>
+
 {% endblock %}

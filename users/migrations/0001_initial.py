@@ -41,16 +41,6 @@ class Migration(migrations.Migration):
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
-        migrations.CreateModel(
-            name='Lens',
-            fields=[
-                ('name', models.CharField(max_length=30)),
-                ('updated', models.DateTimeField(auto_now=True)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False, unique=True)),
-                ('camera', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='users.camera')),
-            ],
-        ),
         migrations.AddField(
             model_name='camera',
             name='profile',

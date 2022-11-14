@@ -57,7 +57,6 @@ $(document).on('submit', '#form_like', function (e) {
         success: function () {
             let like = $('#no_likes')
             like.text(parseInt(like.text()) + 1)
-            $("#likeBtn").prop("disabled", true)
         }
     })
 })
@@ -76,7 +75,6 @@ $(document).on('submit', '#form_dislike', function (e) {
         success: function () {
             let dislike = $('#no_dislikes')
             dislike.text(parseInt(dislike.text()) + 1)
-            $("#dislikeBtn").prop("disabled", true)
         }
     })
 })
@@ -123,3 +121,16 @@ $(document).on('submit', '#form_register', function (e) {
         }
     })
 })
+
+function toggle_like(id) {
+    $.ajax({
+        method:'GET',
+        url: 'like_owners/'+id,
+        dataType: 'json',
+        success: function (data){
+            if(data['message'] === 'already liked') {
+
+            }
+        }
+    })
+}

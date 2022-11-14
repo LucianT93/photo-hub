@@ -37,12 +37,11 @@
                       </p>
                     </div>
                     {% if request.user.is_authenticated and request.user != photo.owner.user %}
-{#                      {% if request.user.profile in photo.ratinglikedislike_set.owner %}#}
                         <form method="POST" id="form_like" action="{% url 'like_dislike' %}">
                         {% csrf_token %}
                           <input type="hidden" name="like" id="like" value="Like">
                           <input type="hidden" name="photo_id" id="photo_id" value={{ photo.id }}>
-                          <button type="submit" value="like" id="likeBtn" class="btn btn-outline-primary me-2">
+                          <button type="submit" onclick="toggle_like('{{ photo.id }}')" id="likeBtn_{{ photo.id }}" class="btn btn-outline-primary me-2">
                             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like
                           </button>
                         </form>
@@ -50,7 +49,7 @@
                         {% csrf_token %}
                           <input type="hidden" name="dislike" id="dislike" value="Dislike">
                           <input type="hidden" name="photo_id" id="photo_id" value={{ photo.id }}>
-                          <button type="submit" value="dislike" id="dislikeBtn" class="btn btn-outline-primary">
+                          <button type="submit" id="dislikeBtn_{{ photo.id }}" class="btn btn-outline-primary">
                             <i class="fa fa-thumbs-o-down" aria-hidden="true"></i> Dislike
                           </button>
                         </form>

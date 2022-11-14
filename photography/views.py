@@ -32,6 +32,13 @@ class PhotoPostHome(TemplateView):
         return data
 
 
+def get_like_owners(request, pk):
+    photo = Photography.objects.get(id=pk)
+    if request.user in [rating.owner.user for rating in photo.ratinglikedislike_set.all()]:
+        return HttpResponse(json.dumps({'message': 'already liked'}), content_type='application/json')
+    return HttpResponse(json.dumps({'message': 'not liked'}), content_type='application/json')
+
+
 def user_logout(request):
     logout(request)
     return redirect('home')
@@ -75,6 +82,7 @@ def comment_form(request):
         rating.save()
     return redirect('home')
 
+
 #
 # def like_or_dislike(value, photo_obj, owner):
 #     photo_obj.up_votes += 1
@@ -102,4 +110,3 @@ def like_dislike_rating(request):
             return HttpResponse("Disliked")
 
     return JsonResponse({'likes': photo_obj.up_votes, 'dislikes': photo_obj.down_votes})
-

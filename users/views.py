@@ -6,12 +6,12 @@ from users.forms import ProfileForm, CameraForm, LensForm
 from users.models import Profile
 
 
-class ProfileDetail(LoginRequiredMixin, DetailView):
-    template_name = 'users/profile.html'
-    model = Profile
+def profile_detail(request):
+    profile = Profile.objects.get(id=request.user.profile.id)
+    return render(request, 'users/profile.html', {'profile': profile})
 
 
-def update_profile(request, pk):
+def update_profile(request):
     profile = request.user.profile
     profile_form = ProfileForm(instance=profile)
 
