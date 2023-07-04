@@ -7,58 +7,87 @@
   <div class="container-lg mt-4 ms-auto">
     <div class="row">
       <div class="col-lg-4 position-relative">
-        <a href="{% url 'update-profile' %}"
-           class="position-absolute top-0 end-0 badge rounded-pill bg-secondary edit-page">
-          <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-        </a>
+        <button id="edit_profile_button" style="display: none" data-bs-toggle="modal" data-bs-target="#edit_profile"
+                class="edit-page position-absolute border-0 top-0 end-0 badge rounded-pill bg-secondary">
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Profile
+        </button>
         <div class="profile-img-card">
           <div class="col-md-8 offset-md-2 text-center my-3 position relative">
             <img class="profile-img" src="{{ profile.profile_image.url }}"/>
             <h2 class="mt-2">@{{ profile.user }}</h2>
             <p style="color: rgb(80, 79, 79);">Located in {{ profile.location }}</p>
             <div class="container-fluid">
-              <a href="{{ profile.social_facebook }}" target="_blank" class="fa-icon"><i
-                  class="fa fa-facebook-square fa-4" aria-hidden="true"></i></a>
-              <a href="{{ profile.social_instagram }}" target="_blank" class="fa-icon"><i
-                  class="fa fa-instagram fa-3" aria-hidden="true"></i></a>
-              <a href="{{ profile.social_youtube }}" target="_blank" class="fa-icon"><i
-                  class="fa fa-youtube-play" aria-hidden="true"></i></a>
+              {% if profile.social_facebook %}
+                <a href="{{ profile.social_facebook }}" target="_blank" class="fa-icon"><i
+                    class="fa fa-facebook-square fa-4" aria-hidden="true"></i></a>
+              {% endif %}
+              {% if profile.social_instagram %}
+                <a href="{{ profile.social_instagram }}" target="_blank" class="fa-icon"><i
+                    class="fa fa-instagram fa-3" aria-hidden="true"></i></a>
+              {% endif %}
+              {% if profile.social_youtube %}
+                <a href="{{ profile.social_youtube }}" target="_blank" class="fa-icon"><i
+                    class="fa fa-youtube-play" aria-hidden="true"></i></a>
+              {% endif %}
             </div>
+          </div>
+          <div class="container-fluid">
+            <p class="account-desc px-3 py-1">{{ profile.description }}
           </div>
         </div>
       </div>
       <div class="col-lg-8 position-relative">
         <h2 class="text-center"><b>ABOUT ME</b></h2>
-        <a href="{% url 'update-profile' %}"
-           class="position-absolute top-0 end-0 badge rounded-pill bg-secondary edit-page">
-          <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-        </a>
+        <button type="button" id="edit_page" onclick="show_edit()"
+                class="position-absolute border-0 top-0 end-0 badge rounded-pill bg-primary">
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Page
+        </button>
         <div class="container-fluid">
           <p class="account-desc px-3 py-1">{{ profile.description }}</div>
         <h2 class="text-center"><b>Equipment</b></h2>
         <div class="px-4 pt-2 position-relative">
-          <a href="#"
-             class="position-absolute top-0 end-0 badge rounded-pill bg-secondary edit-page">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-          </a>
-          <table class="table table-striped table-bordered x-3">
+          <table id="camera_lens_table" class="table table-bordered x-3">
             <thead>
             <tr>
-              <th>Camera</th>
-              <th>Lens</th>
+              <th>
+                <div class="d-flex justify-content-between">
+                  <div>Camera</div>
+                  <div>
+                    <button style="display: none" id="edit_camera_button" data-bs-toggle="modal"
+                            data-bs-target="#edit_camera"
+                            class="border-0 badge rounded-pill bg-secondary edit-page">
+                      <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Camera
+                    </button>
+                  </div>
+                </div>
+              </th>
+              <th>
+                <div class="d-flex justify-content-between">
+                  <div>Lens</div>
+                  <div>
+                    <button style="display: none" id="edit_lens_button" data-bs-toggle="modal"
+                            data-bs-target="#edit_lens"
+                            class="border-0 badge rounded-pill bg-secondary edit-page">
+                      <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Lens
+                    </button>
+                  </div>
+                </div>
+              </th>
             </tr>
             </thead>
             <tbody>
-
-            <tr>
-              {% for camera in profile.camera_set.all %}
+            {% for camera in profile.camera_set.all %}
+              <tr>
                 <td>{{ camera }}</td>
-              {% endfor %}
-              {% for lens in profile.lens_set.all %}
-                <td>{{ lens }}</td>
-              {% endfor %}
-            </tr>
-
+                <td>
+                  <ul class="list-group list-group-flush">
+                    {% for lens in camera.lens_set.all %}
+                      <li class="list-group-item">{{ lens }}</li>
+                    {% endfor %}
+                  </ul>
+                </td>
+              </tr>
+            {% endfor %}
             </tbody>
           </table>
         </div>
@@ -79,6 +108,89 @@
           </div>
         </div>
       {% endfor %}
+    </div>
+  </div>
+  <!-- Modal for add camera -->
+  <div class="modal fade" id="edit_camera" tabindex="-1" aria-labelledby="cameraLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="post" action="{% url 'camera' %}">
+        {% csrf_token %}
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Please add a camera</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="text" class="form-control" name="camera" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Modal for add lens -->
+  <div class="modal fade" id="edit_lens" tabindex="-1" aria-labelledby="lensLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="post" action="{% url 'lens' %}">
+        {% csrf_token %}
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Please add a lens</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            {{ form }}
+            <input type="text" class="form-control mt-2" name="lens" placeholder="Please add lens" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Modal for edit profile -->
+  <div class="modal fade" id="edit_profile" tabindex="-1" aria-labelledby="profileLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Profile</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+          <div class="modal-body">
+            {% csrf_token %}
+            <div class="col-md-8 offset-md-2 text-center my-3">
+              <div class="account-card">
+                <label for="profile_image">
+                  <img title="Click to edit" class="profile-img account-img-card" id="profile-img"
+                       src="{{ profile.profile_image.url }}"/>
+                </label>
+              </div>
+              <div style="display: none">
+                {{ profile_form.profile_image }}
+              </div>
+              <h2 class="mt-2">@{{ profile.user }}</h2>
+            </div>
+            <div class="container-fluid mb-3">
+              {% for field in profile_form %}
+                {% if field.name != 'profile_image' %}
+                  {{ field.label }}
+                  {{ field }}
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 

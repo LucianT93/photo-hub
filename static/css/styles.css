@@ -91,12 +91,8 @@ body{
     opacity: 1;
 }
 
-a.edit-page{
-    text-decoration: none;
-}
-
-a.edit-page:hover{
-    color: white;
+.edit-page{
+    display: none;
 }
 
 .fa-icon, .fa-icon:hover{
@@ -126,4 +122,10 @@ a.show-desc-btn:hover, a.hide-desc-btn:hover{
 #liveToast{
     background-color: white ;
     opacity: 100%;
+}
+
+#camera_input:focus, #lens_input:focus{
+    outline: none!important;
+    border:0;
+    outline:0;
 }

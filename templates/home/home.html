@@ -29,27 +29,27 @@
                     <div class="d-flex border border-2 px-2 rounded-pill me-3">
                       <p class="card-text m-auto me-2"><i class="fa fa-thumbs-o-up me-2"
                                                           aria-hidden="true"></i>
-                        <span id="no_likes">{{ photo.up_votes }}</span>
+                        <span id="no_likes_{{ photo.id }}">{{ photo.up_votes }}</span>
                       </p>
                       <p class="card-text m-auto"><i class="fa fa-thumbs-o-down me-2"
                                                      aria-hidden="true"></i>
-                        <span id="no_dislikes">{{ photo.down_votes }}</span>
+                        <span id="no_dislikes_{{ photo.id }}">{{ photo.down_votes }}</span>
                       </p>
                     </div>
                     {% if request.user.is_authenticated and request.user != photo.owner.user %}
-                        <form method="POST" id="form_like" action="{% url 'like_dislike' %}">
+                        <form method="POST" id="form_like_{{ photo.id }}">
                         {% csrf_token %}
-                          <input type="hidden" name="like" id="like" value="Like">
-                          <input type="hidden" name="photo_id" id="photo_id" value={{ photo.id }}>
-                          <button type="submit" onclick="toggle_like('{{ photo.id }}')" id="likeBtn_{{ photo.id }}" class="btn btn-outline-primary me-2">
+                          <input type="hidden" name="like" id="like_{{ photo.id }}" value="Like">
+                          <input type="hidden" name="photo_id" id="photo_id_{{ photo.id }}" value={{ photo.id }}>
+                          <button type="submit" id="likeBtn_{{ photo.id }}" class="btn btn-outline-primary me-2">
                             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Like
                           </button>
                         </form>
-                        <form method="POST" id="form_dislike" action="{% url 'like_dislike' %}">
+                        <form method="POST" id="form_dislike">
                         {% csrf_token %}
                           <input type="hidden" name="dislike" id="dislike" value="Dislike">
                           <input type="hidden" name="photo_id" id="photo_id" value={{ photo.id }}>
-                          <button type="submit" id="dislikeBtn_{{ photo.id }}" class="btn btn-outline-primary">
+                          <button type="submit" class="btn btn-outline-primary">
                             <i class="fa fa-thumbs-o-down" aria-hidden="true"></i> Dislike
                           </button>
                         </form>

@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import TextInput, PasswordInput
 
-from users.models import Profile, Camera, Lens
+from users.models import Profile
 
 
 class LoginForm(forms.ModelForm):
@@ -86,27 +86,4 @@ class ProfileForm(forms.ModelForm):
             )
 
 
-class CameraForm(forms.ModelForm):
-    class Meta:
-        model = Camera
-        fields = ['name']
 
-        widgets = {
-            'name': TextInput(attrs={
-                'class': 'form-control',
-                'id': 'camera_description'
-            }),
-        }
-
-
-class LensForm(forms.ModelForm):
-    class Meta:
-        model = Lens
-        fields = ['name']
-
-        widgets = {
-            'name': TextInput(attrs={
-                'class': 'form-control',
-                'id': 'lens_description'
-            }),
-        }

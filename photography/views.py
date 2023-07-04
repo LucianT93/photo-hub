@@ -9,34 +9,41 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, TemplateView
 from django.contrib.auth import login, authenticate, logout
-from photography.forms import CreateProfileOnRegister, CommentForm
+from photography.forms import CreateProfileOnRegister, CommentForm, CreatePostPhoto
 from photography.models import Photography, RatingLikeDislike
 from users.forms import LoginForm, SignUpForm
 
 
-class PhotoPostHome(TemplateView):
-    template_name = 'home/home.html'
+def photo_post_home(request):
+    if request.method == 'POST':
+        photo_obj = Photography.objects.get(id=request.POST.get('photo_id'))
+        owner = request.user.profile
+        if request.POST.get('like'):
+            like_obj = RatingLikeDislike(name='Like', owner=owner, photography=photo_obj)
+            like_obj.save()
+            photo_obj.up_votes += 1
+            photo_obj.save()
+            # TODO: like button remains disabled if already voted -> html
+        else:
+            dislike_obj = RatingLikeDislike(name='Dislike', owner=owner, photography=photo_obj)
+            dislike_obj.save()
+            photo_obj.down_votes += 1
+            photo_obj.save()
+    context = {
+        'form_comment': CommentForm(),
+        'form_login': LoginForm(),
+        'form_signup': SignUpForm(),
+        'form_create_photo': CreatePostPhoto(),
+        'all_photos': Photography.objects.all().order_by('-created')
+    }
+    return render(request, 'home/home.html', context)
 
-    def get_context_data(self, **kwargs):
-        data = super(PhotoPostHome, self).get_context_data(**kwargs)
-        all_photos = Photography.objects.all().order_by('-created')
-        form_comment = CommentForm()
-        form_login = LoginForm()
-        form_signup = SignUpForm()
 
-        data['form_comment'] = form_comment
-        data['form_login'] = form_login
-        data['form_signup'] = form_signup
-        data['all_photos'] = all_photos
-
-        return data
-
-
-def get_like_owners(request, pk):
-    photo = Photography.objects.get(id=pk)
-    if request.user in [rating.owner.user for rating in photo.ratinglikedislike_set.all()]:
-        return HttpResponse(json.dumps({'message': 'already liked'}), content_type='application/json')
-    return HttpResponse(json.dumps({'message': 'not liked'}), content_type='application/json')
+# def get_like_owners(request, pk):
+#     photo = Photography.objects.get(id=pk)
+#     if request.user in [rating.owner.user for rating in photo.ratinglikedislike_set.all()]:
+#         return HttpResponse(json.dumps({'message': 'already liked'}), content_type='application/json')
+#     return HttpResponse(json.dumps({'message': 'not liked'}), content_type='application/json')
 
 
 def user_logout(request):
@@ -83,30 +90,11 @@ def comment_form(request):
     return redirect('home')
 
 
-#
-# def like_or_dislike(value, photo_obj, owner):
-#     photo_obj.up_votes += 1
-#     photo_obj.save()
-#     like_obj = RatingLikeDislike(name=value, owner=owner, photography=photo_obj)
-#     like_obj.save()
-
-
-def like_dislike_rating(request):
-    owner = request.user.profile
-    photo_obj = Photography.objects.get(id=request.POST.get('photo_id'))
+def create_post(request):
     if request.method == 'POST':
-        if request.POST.get('like'):
-            like_obj = RatingLikeDislike(name='Like', owner=owner, photography=photo_obj)
-            like_obj.save()
-            photo_obj.up_votes += 1
-            photo_obj.save()
-            return HttpResponse("Liked")
-            # TODO: like button remains disabled if already voted -> html
-        else:
-            dislike_obj = RatingLikeDislike(name='Dislike', owner=owner, photography=photo_obj)
-            dislike_obj.save()
-            photo_obj.down_votes += 1
-            photo_obj.save()
-            return HttpResponse("Disliked")
-
-    return JsonResponse({'likes': photo_obj.up_votes, 'dislikes': photo_obj.down_votes})
+        post_form = CreatePostPhoto(request.POST, request.FILES)
+        if post_form.is_valid():
+            photo_post = post_form.save(commit=False)
+            photo_post.owner = request.user.profile
+            photo_post.save()
+    return redirect('home')

@@ -171,7 +171,7 @@
     </div>
   </div>
 </div>
-<!-- Modal for Create page -->
+<!-- Modal for Create post -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -180,20 +180,18 @@
         <h5 class="modal-title" id="staticBackdropLabel">Create post</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="post">
+      <form method="POST" action="{% url 'create_post' %}" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="modal-body">
           <div class="mb-3">
-            <label for="formFile" class="form-label">Please select an image to upload</label>
-            <input class="form-control" type="file" id="formFile">
+            {{ form_create_photo }}
+            <img id="output" class="img-fluid mt-2 border rounded-2 shadow"/>
           </div>
-          <textarea class="form-control"></textarea>
-          <img id="output" class="img-fluid mt-2 border rounded-2 shadow"/>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-        <input type="hidden" name="form_create_post" value="f_create_post">
       </form>
     </div>
   </div>
